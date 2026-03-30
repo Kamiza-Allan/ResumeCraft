@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'resume_editor_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -22,7 +23,10 @@ class DashboardScreen extends StatelessWidget {
               NavigationRailDestination(icon: Icon(Icons.work_outline), label: Text('Jobs')),
               NavigationRailDestination(icon: Icon(Icons.person_outline), label: Text('Account')),
             ],
-            onDestinationSelected: (index) {},
+            onDestinationSelected: (index) {
+              if (index == 1) Navigator.pushNamed(context, '/resumes');
+              if (index == 3) Navigator.pushNamed(context, '/account');
+            },
           ),
           const VerticalDivider(thickness: 1, width: 1),
           
@@ -44,7 +48,12 @@ class DashboardScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (context) => const ResumeEditorScreen()),
+                     );
+                    },
                     style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16)),
                     child: const Text("New Resume", style: TextStyle(color: Colors.white)),
                   ),

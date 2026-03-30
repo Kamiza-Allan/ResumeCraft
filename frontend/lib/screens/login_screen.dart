@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
             // Google Sign-in Button
             OutlinedButton.icon(
               onPressed: () {}, 
-              icon: Image.asset('assets/google_logo.png', height: 20),
+              icon: Image.asset('assets/google_logo.jpg', height: 20),
               label: const Text("Sign in with Google"),
             ),
             
@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 24),
             
             ElevatedButton(
-              onPressed: () { /* Call AuthService.login */ },
+              onPressed: () => Navigator.pushReplacementNamed(context, '/dashboard')/* Call AuthService.login */ ,
               child: const Text("Sign in", style: TextStyle(color: Colors.white)),
             ),
             
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("New to ResumeCraft?"),
-                TextButton(onPressed: () {}, child: const Text("Create account")),
+                TextButton(onPressed: () => Navigator.pushNamed(context, '/register'), child: const Text("Create account")),
               ],
             ),
           ],
