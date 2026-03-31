@@ -37,8 +37,8 @@ class LandingScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          "⚙️ ResumeCraft", 
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black)
+          "ResumeCraft", 
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black)
         ),
         // If mobile, only show the "Sign in" button to save space
         if (isMobile)
@@ -49,11 +49,11 @@ class LandingScreen extends StatelessWidget {
         else
           Row(
             children: [
-              TextButton(onPressed: () {}, child: const Text("About", style: TextStyle(color: Colors.black))),
+              TextButton(onPressed: () {}, child: const Text("About", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
               const SizedBox(width: 20),
-              TextButton(onPressed: () {}, child: const Text("Features", style: TextStyle(color: Colors.black))),
+              TextButton(onPressed: () {}, child: const Text("Features", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
               const SizedBox(width: 20),
-              TextButton(onPressed: () {}, child: const Text("Pricing", style: TextStyle(color: Colors.black))),
+              TextButton(onPressed: () {}, child: const Text("Pricing", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
               const SizedBox(width: 20),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, '/login'), 
@@ -71,7 +71,7 @@ class LandingScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Build Smarter\nResumes with AI",
+          "Build Smarter Resumes",
           // Font size drops to 40 lots on mobile
           style: TextStyle(fontSize: isMobile ? 40 : 56, fontWeight: FontWeight.w900, height: 1.1),
         ),
@@ -89,13 +89,14 @@ class LandingScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/register'),
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                backgroundColor: Colors.green, // Your signature blue
+                foregroundColor: Colors.white,            // Text and Icon color
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              child: const Text("Get Started", style: TextStyle(color: Colors.white, fontSize: 16)),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text("Try Demo", style: TextStyle(color: Colors.blue, fontSize: 16)),
+              child: const Text("Get Started", style: TextStyle(color: Colors.black, fontSize: 16)),
             ),
           ],
         ),
@@ -106,7 +107,7 @@ class LandingScreen extends StatelessWidget {
     Widget imageContent = const Center(
       child: Padding(
         padding: EdgeInsets.all(20.0),
-        child: Icon(Icons.smart_toy, size: 120, color: Colors.blue),
+        child: Icon(Icons.edit_note, size: 120, color: Colors.purpleAccent),
       ),
     );
 
@@ -122,7 +123,7 @@ class LandingScreen extends StatelessWidget {
       children: [
         const Text("Features", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
         const SizedBox(height: 30),
-        _buildFeatureItem(Icons.edit_document, "AI Realtime Builder", "Stand out with AI generated suggestions."),
+        _buildFeatureItem(Icons.edit_document , "Realtime Builder", "Stand out with auto-generated suggestions."),
         _buildFeatureItem(Icons.devices, "Cross Platform Sync", "Shape and edit your resume anywhere."),
         _buildFeatureItem(Icons.branding_watermark, "Custom Branding", "Structure your design to fit your style."),
       ],
