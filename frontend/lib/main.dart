@@ -16,6 +16,7 @@ class ResumeCraftApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ResumeCraft',
+      debugShowCheckedModeBanner: false,
       initialRoute: '/', // Start at the Landing Page
       routes: {
         '/': (context) => const LandingScreen(),
