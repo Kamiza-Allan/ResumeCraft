@@ -38,6 +38,14 @@ class LoginScreen extends StatelessWidget {
             
             ElevatedButton(
               onPressed: () => Navigator.pushReplacementNamed(context, '/dashboard')/* Call AuthService.login */ ,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Your signature blue
+                foregroundColor: Colors.white,            // Text and Icon color
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
               child: const Text("Sign in", style: TextStyle(color: Colors.white)),
             ),
             

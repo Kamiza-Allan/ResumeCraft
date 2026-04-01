@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 60),
-              Image.asset('assets/logo.png', height: 40), //
+              Image.asset('assets/logo.jpg', height: 40), //
               const SizedBox(height: 40),
               const Text("Create account", 
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), 
@@ -25,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
               // Google Sign-up
               OutlinedButton.icon(
                 onPressed: () {}, 
-                icon: const Icon(Icons.g_mobiledata, size: 30), // Placeholder for Google Icon
+                icon: Image.asset('assets/google_logo.jpg', height: 20), // Placeholder for Google Icon
                 label: const Text("Sign up with Google"),
               ),
               
@@ -41,10 +41,20 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 16),
               const TextField(decoration: InputDecoration(labelText: 'Email', suffixText: 'Show')),
               const SizedBox(height: 24),
+              const TextField(decoration: InputDecoration(labelText: 'Password', suffixText: 'Show')),
+              const SizedBox(height: 24),
               
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Create account", style: TextStyle(color: Colors.white)),
+              ElevatedButton( 
+               onPressed: () => Navigator.pushNamed(context, ''),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // Your signature blue
+                foregroundColor: Colors.white,            // Text and Icon color
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+                child: const Text("Create account", style: TextStyle(color: Colors.black)),
               ),
               
               const SizedBox(height: 20),
@@ -59,7 +69,7 @@ class RegisterScreen extends StatelessWidget {
                 children: [
                   const Text("Already have an account?"),
                   TextButton(
-                    onPressed: () => Navigator.pop(context), 
+                    onPressed: () => Navigator.pushNamed(context, '/login'),
                     child: const Text("Sign in")
                   ),
                 ],
