@@ -5,24 +5,26 @@ class LandingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Determine if the screen is mobile-sized
-    final isMobile = MediaQuery.of(context).size.width < 600;
+    // Breakpoint: Treat anything under 850 lots as mobile
+    final isMobile = MediaQuery.of(context).size.width < 850;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          // Adjusted padding to use 20 lots on mobile, 40 lots on desktop
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 20.0 : 40.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20.0 : 60.0, 
+            vertical: 20.0
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildNavBar(context, isMobile),
-              SizedBox(height: isMobile ? 40 : 80),
+              const SizedBox(height: 60),
               _buildHeroSection(context, isMobile),
-              SizedBox(height: isMobile ? 60 : 100),
-              _buildFeaturesAndHowItWorks(isMobile),
-              SizedBox(height: isMobile ? 40 : 80),
+              const SizedBox(height: 80),
+              _buildFeatures(isMobile),
+              const SizedBox(height: 60),
               _buildFooter(isMobile),
             ],
           ),
@@ -31,220 +33,128 @@ class LandingScreen extends StatelessWidget {
     );
   }
 
-  // 1. Responsive Navigation Bar
+  // --- Header / Nav ---
   Widget _buildNavBar(BuildContext context, bool isMobile) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          "ResumeCraft", 
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black)
+        Row(
+          children: [
+            const Icon(Icons.description, color: Color(0xFF2D62FF), size: 30),
+            const SizedBox(width: 10),
+            const Text(
+              "ResumeCraft",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
-        // If mobile, only show the "Sign in" button to save space
-        if (isMobile)
-          TextButton(
-            onPressed: () => Navigator.pushNamed(context, '/login'), 
-            child: const Text("Sign in", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
-          )
-        else
+        if (!isMobile)
           Row(
             children: [
-              TextButton(onPressed: () {}, child: const Text("About", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+              TextButton(onPressed: () {}, child: const Text("About", style: TextStyle(color: Colors.black))),
               const SizedBox(width: 20),
-              TextButton(onPressed: () {}, child: const Text("Features", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
+              TextButton(onPressed: () {}, child: const Text("Features", style: TextStyle(color: Colors.black))),
               const SizedBox(width: 20),
-              TextButton(onPressed: () {}, child: const Text("Pricing", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
-              const SizedBox(width: 20),
-              TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/login'), 
-                child: const Text("Sign in", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, '/login'),
+                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2D62FF)),
+                child: const Text("Sign In", style: TextStyle(color: Colors.white)),
               ),
             ],
           )
+        else
+          IconButton(icon: const Icon(Icons.menu), onPressed: () {}),
       ],
     );
   }
 
-  // 2. Responsive Hero Section
+  // --- Hero Section ---
   Widget _buildHeroSection(BuildContext context, bool isMobile) {
     Widget textContent = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Build Smarter Resumes",
-          // Font size drops to 40 lots on mobile
-          style: TextStyle(fontSize: isMobile ? 40 : 56, fontWeight: FontWeight.w900, height: 1.1),
+          "Build Smarter\nResumes with AI",
+          style: TextStyle(
+            fontSize: isMobile ? 42 : 64, 
+            fontWeight: FontWeight.w900, 
+            height: 1.1
+          ),
         ),
         const SizedBox(height: 20),
-        Text(
+        const Text(
           "Create and manage your resume seamlessly across web and mobile.",
-          style: TextStyle(fontSize: isMobile ? 16 : 18, color: Colors.grey),
+          style: TextStyle(fontSize: 18, color: Colors.grey),
         ),
-        const SizedBox(height: 30),
-        // Wrap allows buttons to flow to the next line if they run out of space
+        const SizedBox(height: 40),
         Wrap(
-          spacing: 16,
-          runSpacing: 16,
+          spacing: 20,
+          runSpacing: 20,
           children: [
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/register'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // Your signature blue
-                foregroundColor: Colors.white,            // Text and Icon color
-                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                backgroundColor: const Color(0xFF2D62FF),
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 22),
               ),
-              child: const Text("Get Started", style: TextStyle(color: Colors.black, fontSize: 16)),
+              child: const Text("Get Started", style: TextStyle(color: Colors.white, fontSize: 16)),
+            ),
+            OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 22),
+                side: const BorderSide(color: Color(0xFF2D62FF)),
+              ),
+              child: const Text("Try Demo", style: TextStyle(color: Color(0xFF2D62FF))),
             ),
           ],
         ),
       ],
     );
 
-    // Replaced the missing Image.asset with a built-in Icon to stop the red error box
-    Widget imageContent = const Center(
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Icon(Icons.edit_note, size: 120, color: Colors.purpleAccent),
+    Widget imageContent = Center(
+      child: Image.asset(
+        'assets/ai_assistant.png',
+        height: isMobile ? 250 : 450,
+        errorBuilder: (context, error, stackTrace) => 
+            const Icon(Icons.smart_toy, size: 150, color: Color(0xFF2D62FF)),
       ),
     );
 
-    return isMobile
-        ? Column(children: [textContent, const SizedBox(height: 40), imageContent])
-        : Row(children: [Expanded(flex: 1, child: textContent), Expanded(flex: 1, child: imageContent)]);
+    return isMobile 
+      ? Column(children: [textContent, const SizedBox(height: 40), imageContent])
+      : Row(children: [Expanded(child: textContent), Expanded(child: imageContent)]);
   }
 
-  // 3. Responsive Features Section
-  Widget _buildFeaturesAndHowItWorks(bool isMobile) {
-    Widget featuresColumn = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  // --- Features ---
+  Widget _buildFeatures(bool isMobile) {
+    return Wrap(
+      spacing: 40,
+      runSpacing: 40,
       children: [
-        const Text("Features", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 30),
-        _buildFeatureItem(Icons.edit_document , "Realtime Builder", "Stand out with auto-generated suggestions."),
-        _buildFeatureItem(Icons.devices, "Cross Platform Sync", "Shape and edit your resume anywhere."),
-        _buildFeatureItem(Icons.branding_watermark, "Custom Branding", "Structure your design to fit your style."),
+        _featureIcon(Icons.auto_awesome, "AI Builder"),
+        _featureIcon(Icons.devices, "Mobile Sync"),
+        _featureIcon(Icons.security, "Secure PDF"),
       ],
     );
-
-    Widget howItWorksColumn = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("How It Works", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildHowItWorksItem(Icons.input, "Input"),
-            const Icon(Icons.arrow_forward, color: Colors.grey),
-            _buildHowItWorksItem(Icons.auto_awesome, "AI Enhance"),
-          ],
-        ),
-        const SizedBox(height: 40),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildHowItWorksItem(Icons.dashboard_customize, "Template"),
-            const Icon(Icons.arrow_forward, color: Colors.grey),
-            _buildHowItWorksItem(Icons.upload, "Export"),
-          ],
-        ),
-      ],
-    );
-
-    return isMobile
-        ? Column(children: [featuresColumn, const SizedBox(height: 60), howItWorksColumn])
-        : Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(child: featuresColumn),
-            Expanded(child: howItWorksColumn),
-          ]);
   }
 
-  // 4. Helper Methods remain the same
-  Widget _buildFeatureItem(IconData icon, String title, String subtitle) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 24.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: Colors.blue.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-            child: Icon(icon, color: Colors.blue),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 4),
-                Text(subtitle, style: const TextStyle(color: Colors.grey)),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHowItWorksItem(IconData icon, String title) {
+  Widget _featureIcon(IconData icon, String title) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(color: Colors.blue.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
-          child: Icon(icon, color: Colors.blue, size: 32),
+        CircleAvatar(
+          backgroundColor: const Color(0xFF2D62FF).withOpacity(0.1),
+          child: Icon(icon, color: const Color(0xFF2D62FF)),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
         Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       ],
     );
   }
 
-  // 5. Responsive Footer Section
   Widget _buildFooter(bool isMobile) {
-    return Column(
-      children: [
-        const Divider(),
-        const SizedBox(height: 40),
-        isMobile
-            ? Column(
-                children: [
-                  const Text("“Got hired in 2 weeks thanks to ResumeCraft AI.”\n4.0/5 user rating",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Trusted by: ", style: TextStyle(color: Colors.grey)),
-                      const SizedBox(width: 20),
-                      Icon(Icons.business, color: Colors.grey.shade400, size: 40),
-                      const SizedBox(width: 20),
-                      Icon(Icons.computer, color: Colors.grey.shade400, size: 40),
-                    ],
-                  )
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("“Got hired in 2 weeks thanks to ResumeCraft AI.”\n4.0/5 user rating",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-                  Row(
-                    children: [
-                      const Text("Trusted by: ", style: TextStyle(color: Colors.grey)),
-                      const SizedBox(width: 20),
-                      Icon(Icons.business, color: Colors.grey.shade400, size: 40),
-                      const SizedBox(width: 20),
-                      Icon(Icons.computer, color: Colors.grey.shade400, size: 40),
-                    ],
-                  )
-                ],
-              ),
-      ],
+    return const Center(
+      child: Text("© 2026 ResumeCraft AI. All rights reserved.", style: TextStyle(color: Colors.grey)),
     );
   }
 }
