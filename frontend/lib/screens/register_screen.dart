@@ -36,9 +36,6 @@ class RegisterScreen extends StatelessWidget {
                 Expanded(child: Divider())
               ]),
               const SizedBox(height: 20),
-
-              const TextField(decoration: InputDecoration(labelText: 'Name')),
-              const SizedBox(height: 16),
               const TextField(decoration: InputDecoration(labelText: 'Email', suffixText: 'Show')),
               const SizedBox(height: 24),
               const TextField(decoration: InputDecoration(labelText: 'Password', suffixText: 'Show')),
